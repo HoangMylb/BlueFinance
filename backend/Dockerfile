@@ -23,8 +23,8 @@ EXPOSE 8080
 # Copy published output
 COPY --from=build /app/publish .
 
-# Render.com provides PORT env var; default to 8080
-ENV ASPNETCORE_URLS=http://0.0.0.0:${PORT:-8080}
+# Render overrides PORT via env var at runtime
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 
 ENTRYPOINT ["dotnet", "BlueFinance.API.dll"]
