@@ -13,9 +13,9 @@ services:
         value: Production
       - key: PORT
         value: "8080"
-      # Production frontend URL — thay bằng domain thật của frontend sau
+      # Cho phép tất cả origin (AllowAnyOrigin) — xem Program.cs CORS logic
       - key: AllowedOrigins
-        value: https://your-frontend-domain.com
+        value: "*"
       # Supabase PostgreSQL connection string (pooled)
       - key: ConnectionStrings__DefaultConnection
         value: "Host=aws-1-ap-southeast-1.pooler.supabase.com;Port=6543;Database=postgres;Username=postgres.speqmdsioarzccxwxvci;Password=Nguyenmylb85@!;SSL Mode=Require;Trust Server Certificate=true;Command Timeout=120;Pooling=false"
