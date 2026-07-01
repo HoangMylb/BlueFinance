@@ -31,19 +31,11 @@ public class DashboardController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetDashboard()
     {
-        var walletsTask = _walletService.GetAllAsync();
-        var categoriesTask = _categoryService.GetAllAsync();
-        var transactionsTask = _transactionService.GetAllAsync();
-        var budgetsTask = _budgetService.GetAllAsync();
-        var recurringTask = _recurringService.GetAllAsync();
-
-        await Task.WhenAll(walletsTask, categoriesTask, transactionsTask, budgetsTask, recurringTask);
-
-        var wallets = walletsTask.Result;
-        var categories = categoriesTask.Result;
-        var transactions = transactionsTask.Result;
-        var budgets = budgetsTask.Result;
-        var recurring = recurringTask.Result;
+        var wallets = await _walletService.GetAllAsync();
+        var categories = await _categoryService.GetAllAsync();
+        var transactions = await _transactionService.GetAllAsync();
+        var budgets = await _budgetService.GetAllAsync();
+        var recurring = await _recurringService.GetAllAsync();
 
         var now = DateTime.UtcNow;
         var monthStart = new DateTime(now.Year, now.Month, 1, 0, 0, 0, DateTimeKind.Utc);
