@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { addRecurring, toggleRecurringActive, deleteRecurring } from '../../store/slices/financeSlice';
+import { addRecurring, toggleRecurringActive, deleteRecurring, fetchRecurring } from '../../store/slices/financeSlice';
 import { formatCurrency, formatDate } from '../../lib/utils';
 import { categoryIconMap } from '../dashboard/DashboardView';
 import { Plus, X, CalendarClock, AlertTriangle, ToggleLeft, ToggleRight, Trash2, HelpCircle } from 'lucide-react';
@@ -11,6 +11,8 @@ export default function RecurringView() {
   const recurring = useAppSelector((state) => state.finance.recurring);
   const categories = useAppSelector((state) => state.finance.categories);
   const wallets = useAppSelector((state) => state.finance.wallets);
+
+  useEffect(() => { dispatch(fetchRecurring()); }, [dispatch]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   

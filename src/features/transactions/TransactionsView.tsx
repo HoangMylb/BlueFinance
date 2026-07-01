@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { addTransaction, editTransaction, deleteTransaction } from '../../store/slices/financeSlice';
+import { addTransaction, editTransaction, deleteTransaction, fetchTransactions } from '../../store/slices/financeSlice';
 import { formatCurrency, formatDate } from '../../lib/utils';
 import { categoryIconMap } from '../dashboard/DashboardView';
 import { 
@@ -22,6 +22,8 @@ export default function TransactionsView() {
   const transactions = useAppSelector((state) => state.finance.transactions);
   const categories = useAppSelector((state) => state.finance.categories);
   const wallets = useAppSelector((state) => state.finance.wallets);
+
+  useEffect(() => { dispatch(fetchTransactions()); }, [dispatch]);
 
   // Filter States
   const [searchTerm, setSearchTerm] = useState('');

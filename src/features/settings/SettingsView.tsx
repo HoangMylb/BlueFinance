@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { updateProfile } from '../../store/slices/authSlice';
-import { setCurrency } from '../../store/slices/settingsSlice';
+import { updateProfile, fetchProfile } from '../../store/slices/authSlice';
+import { setCurrency, fetchAppSettings } from '../../store/slices/settingsSlice';
 import { ShieldAlert, Sparkles, User2 } from 'lucide-react';
 
 const CURRENCIES = [
@@ -16,6 +16,8 @@ export default function SettingsView() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const currency = useAppSelector((state) => state.settings.currency);
+
+  useEffect(() => { dispatch(fetchProfile()); dispatch(fetchAppSettings()); }, [dispatch]);
 
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');

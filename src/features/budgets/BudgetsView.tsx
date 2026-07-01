@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setBudget, deleteBudget } from '../../store/slices/financeSlice';
+import { setBudget, deleteBudget, fetchBudgets } from '../../store/slices/financeSlice';
 import { formatCurrency } from '../../lib/utils';
 import { categoryIconMap } from '../dashboard/DashboardView';
 import { Plus, X, AlertTriangle, PiggyBank, CheckCircle, HelpCircle } from 'lucide-react';
@@ -11,6 +11,8 @@ export default function BudgetsView() {
   const budgets = useAppSelector((state) => state.finance.budgets);
   const categories = useAppSelector((state) => state.finance.categories);
   const transactions = useAppSelector((state) => state.finance.transactions);
+
+  useEffect(() => { dispatch(fetchBudgets()); }, [dispatch]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [categoryId, setCategoryId] = useState('');

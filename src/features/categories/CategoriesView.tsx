@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { addCategory } from '../../store/slices/financeSlice';
+import { addCategory, fetchCategories } from '../../store/slices/financeSlice';
 import { categoryIconMap } from '../dashboard/DashboardView';
 import { Plus, X, FolderKanban, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -12,6 +12,8 @@ export default function CategoriesView() {
   const dispatch = useAppDispatch();
   const categories = useAppSelector((state) => state.finance.categories);
   const transactions = useAppSelector((state) => state.finance.transactions);
+
+  useEffect(() => { dispatch(fetchCategories()); }, [dispatch]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [name, setName] = useState('');

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { addWallet, editWallet, deleteWallet } from '../../store/slices/financeSlice';
+import { addWallet, editWallet, deleteWallet, fetchWallets } from '../../store/slices/financeSlice';
 import { formatCurrency } from '../../lib/utils';
 import { WalletType } from '../../types';
 import { Plus, X, Landmark, CreditCard, DollarSign, Bitcoin, Smartphone, TrendingUp, Trash2, Edit } from 'lucide-react';
@@ -18,6 +18,8 @@ const WALLET_COLORS: Record<string, string> = {
 export default function WalletsView() {
   const dispatch = useAppDispatch();
   const wallets = useAppSelector((state) => state.finance.wallets);
+
+  useEffect(() => { dispatch(fetchWallets()); }, [dispatch]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);

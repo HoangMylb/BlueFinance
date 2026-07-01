@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlueFinance.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+80222778b4b454e83ae178a1f1d21632e83c2a36")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d2085ad217636841a21ea044b9bce562790ec61f")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlueFinance.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlueFinance.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Transaction, Category, Wallet, Budget, RecurringTransaction, Goal } from '../../types';
 import {
-  WalletApi, CategoryApi, TransactionApi, BudgetApi, RecurringApi,
+  WalletApi, CategoryApi, TransactionApi, BudgetApi, RecurringApi, DashboardApi,
   WalletDto, CategoryDto, TransactionDto, BudgetDto, RecurringDto,
   mapType, mapWalletType, mapFrequency, toDateStr, toCreateTransactionDto,
   reverseWalletType, reverseFrequency,
@@ -132,19 +132,13 @@ export const fetchRecurring = createAsyncThunk('finance/fetchRecurring', async (
 });
 
 export const fetchAll = createAsyncThunk('finance/fetchAll', async () => {
-  const [walletDtos, categoryDtos, transactionDtos, budgetDtos, recurringDtos] = await Promise.all([
-    WalletApi.getAll(),
-    CategoryApi.getAll(),
-    TransactionApi.getAll(),
-    BudgetApi.getAll(),
-    RecurringApi.getAll(),
-  ]);
+  const dto = await DashboardApi.get();
   return {
-    wallets: walletDtos.map(mapWallet),
-    categories: categoryDtos.map(mapCategory),
-    transactions: transactionDtos.map(mapTransaction),
-    budgets: budgetDtos.map(mapBudget),
-    recurring: recurringDtos.map(mapRecurring),
+    wallets: dto.wallets.map(mapWallet),
+    categories: dto.categories.map(mapCategory),
+    transactions: dto.transactions.map(mapTransaction),
+    budgets: dto.budgets.map(mapBudget),
+    recurring: dto.recurring.map(mapRecurring),
   };
 });
 

@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://bluefinance-api.onrender.com';
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -93,6 +93,10 @@ export const SettingsApi = {
     request<AppSettingsDto>('/api/appsettings', { method: 'PUT', body: JSON.stringify(data) }),
 };
 
+export const DashboardApi = {
+  get: () => request<DashboardDto>('/api/dashboard'),
+};
+
 // ═════════════════════════════════════════════════════════════════════
 // DTOs (backend response shapes)
 // ═════════════════════════════════════════════════════════════════════
@@ -162,6 +166,21 @@ export interface AppSettingsDto {
   currency: string;
   theme: string;
   language: string;
+}
+
+export interface DashboardSummaryDto {
+  totalBalance: number;
+  monthlyIncome: number;
+  monthlyExpense: number;
+}
+
+export interface DashboardDto {
+  wallets: WalletDto[];
+  categories: CategoryDto[];
+  transactions: TransactionDto[];
+  budgets: BudgetDto[];
+  recurring: RecurringDto[];
+  summary: DashboardSummaryDto;
 }
 
 // ─── Request DTOs ───────────────────────────────────────────────────
