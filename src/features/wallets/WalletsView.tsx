@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { addWallet, editWallet, deleteWallet } from '../../store/slices/financeSlice';
 import { formatCurrency } from '../../lib/utils';
 import { WalletType } from '../../types';
-import { Plus, X, Landmark, CreditCard, DollarSign, Bitcoin, Trash2, Edit } from 'lucide-react';
+import { Plus, X, Landmark, CreditCard, DollarSign, Bitcoin, Smartphone, TrendingUp, Trash2, Edit } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const WALLET_COLORS: Record<string, string> = {
@@ -78,7 +78,8 @@ export default function WalletsView() {
       case 'bank': return Landmark;
       case 'card': return CreditCard;
       case 'cash': return DollarSign;
-      case 'crypto': return Bitcoin;
+      case 'e-wallet': return Smartphone;
+      case 'investment': return TrendingUp;
       default: return DollarSign;
     }
   };
@@ -221,7 +222,8 @@ export default function WalletsView() {
                       <option value="bank">Bank Checking</option>
                       <option value="card">Credit Card</option>
                       <option value="cash">Cash / Physical</option>
-                      <option value="crypto">Crypto Exchange</option>
+                      <option value="e-wallet">E-Wallet</option>
+                      <option value="investment">Investment</option>
                     </select>
                   </div>
 

@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types';
+import { ProfileApi, UserProfileDto } from '../../services/api';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -18,6 +19,16 @@ const initialState: AuthState = {
   loading: false,
   error: null,
 };
+
+export const fetchProfile = createAsyncThunk('auth/fetchProfile', async () => {
+  const dto = await ProfileApi.get();
+  return dto;
+});
+
+export const updateUserProfile = createAsyncThunk('auth/updateUserProfile', async (data: Partial<UserProfileDto>) => {
+  const dto = await ProfileApi.update(data);
+  return dto;
+});
 
 const authSlice = createSlice({
   name: 'auth',
@@ -53,6 +64,39 @@ const authSlice = createSlice({
         localStorage.setItem('fin_user', JSON.stringify(state.user));
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProfile.fulfilled, (state, action: PayloadAction<UserProfileDto>) => {
+        if (state.user) {
+          state.user = { ...state.user, name: action.payload.name, email: action.payload.email, avatarUrl: action.payload.avatarUrl };
+          localStorage.setItem('fin_user', JSON.stringify(state.user));
+        }
+        state.loading = false;
+      })
+      .addCase(fetchProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch profile';
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action: PayloadAction<UserProfileDto>) => {
+        if (state.user) {
+          state.user = { ...state.user, name: action.payload.name, email: action.payload.email, avatarUrl: action.payload.avatarUrl };
+          localStorage.setItem('fin_user', JSON.stringify(state.user));
+        }
+        state.loading = false;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to update profile';
+      });
   },
 });
 

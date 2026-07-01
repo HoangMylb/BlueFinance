@@ -33,7 +33,7 @@ export interface Transaction {
   recurringId?: string;
 }
 
-export type WalletType = 'bank' | 'card' | 'cash' | 'crypto';
+export type WalletType = 'bank' | 'card' | 'cash' | 'e-wallet' | 'investment';
 
 export interface Wallet {
   id: string;
@@ -80,4 +80,12 @@ export interface Goal {
   currentAmount: number;
   targetDate: string; // YYYY-MM-DD
   color: string;
+}
+
+export type LanguageType = 'en' | 'vi';
+
+/** Loading / error state for async slices */
+export interface AsyncState {
+  loading: boolean;
+  error: string | null;
 }

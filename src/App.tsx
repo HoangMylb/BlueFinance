@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './store/hooks';
 import { setView } from './store/slices/settingsSlice';
+import { fetchAll } from './store/slices/financeSlice';
 import LandingPage from './features/landing/LandingPage';
 import LoginSignup from './features/auth/LoginSignup';
 import Sidebar from './components/Sidebar';
@@ -28,6 +29,13 @@ export default function App() {
       dispatch(setView('dashboard'));
     }
   }, [isAuthenticated, currentView, dispatch]);
+
+  // Fetch all data from backend when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchAll());
+    }
+  }, [isAuthenticated, dispatch]);
 
   // Route protection: If unauthenticated, redirect views
   const renderUnauthenticated = () => {
