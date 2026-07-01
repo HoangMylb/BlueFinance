@@ -5,9 +5,13 @@ using BlueFinance.API.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ─── Database ──────────────────────────────────────────────────────────
+// ─── Database (Supabase PostgreSQL) ───────────────────────────────────
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+ArgumentNullException.ThrowIfNull(connectionString);
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString, npgsql =>
+        npgsql.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
 // ─── Services ──────────────────────────────────────────────────────────
 builder.Services.AddScoped<IWalletService, WalletService>();

@@ -16,8 +16,8 @@ services:
       # Production frontend URL — thay bằng domain thật của frontend sau
       - key: AllowedOrigins
         value: https://your-frontend-domain.com
-      # Optional: override SQLite path to use persistent disk
-      # - key: ConnectionStrings__DefaultConnection
-      #   value: Data Source=/app/data/bluefinance.db
+      # Supabase PostgreSQL connection string (pooled)
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=aws-1-ap-southeast-1.pooler.supabase.com;Port=6543;Database=postgres;Username=postgres.speqmdsioarzccxwxvci;Password=Nguyenmylb85@!;SSL Mode=Require;Trust Server Certificate=true;Command Timeout=120;Pooling=false"
     healthCheckPath: /api/wallets
     autoDeploy: true

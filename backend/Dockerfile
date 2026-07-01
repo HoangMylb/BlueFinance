@@ -27,7 +27,4 @@ COPY --from=build /app/publish .
 ENV ASPNETCORE_URLS=http://0.0.0.0:${PORT:-8080}
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-# SQLite database directory — Render ephemeral disk; survives single-deploy lifecycle
-VOLUME /app/data
-
 ENTRYPOINT ["dotnet", "BlueFinance.API.dll"]
