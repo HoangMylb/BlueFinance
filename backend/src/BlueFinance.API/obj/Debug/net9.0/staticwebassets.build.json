@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "+mozKjuk5sK+7Irv37rltvvVdsQztzVD61TF688VrpU=",
+  "Source": "BlueFinance.API",
+  "BasePath": "_content/BlueFinance.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
