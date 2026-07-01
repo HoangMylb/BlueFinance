@@ -28,17 +28,22 @@ builder.Services.AddControllers()
     });
 
 // ─── CORS ─────────────────────────────────────────────────────────────
-var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")
-    ?? "http://localhost:5173,http://localhost:3000";
+var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins");
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    if (string.IsNullOrEmpty(allowedOrigins) || allowedOrigins == "*")
     {
-        policy.WithOrigins(allowedOrigins.Split(','))
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+        options.AddDefaultPolicy(policy =>
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    }
+    else
+    {
+        options.AddDefaultPolicy(policy =>
+            policy.WithOrigins(allowedOrigins.Split(',', StringSplitOptions.TrimEntries))
+                  .AllowAnyHeader()
+                  .AllowAnyMethod());
+    }
 });
 
 // ─── Swagger ───────────────────────────────────────────────────────────
